@@ -1,6 +1,6 @@
 require 'test_helper'
 require 'turbomode'
-require "#{File.dirname(File.expand_path(__FILE__))}/fake_component.rb"
+require "#{File.dirname(File.expand_path(__FILE__))}/components/fake_component.rb"
 include Turbomode
 
 describe "Entity" do

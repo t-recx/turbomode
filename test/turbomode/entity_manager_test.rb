@@ -1,6 +1,7 @@
 require 'test_helper'
 require 'turbomode'
 include Turbomode
+include Turbomode::Components
 
 describe "Entity Manager" do
 

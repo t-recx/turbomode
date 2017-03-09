@@ -1,6 +1,6 @@
 require "turbomode/version"
 require "turbomode/entity"
-require "turbomode/component"
+require "turbomode/components/component"
 require "turbomode/entity_manager"
 
 module Turbomode

@@ -20,6 +20,6 @@ describe "Component" do
     end
   end
 
-  class ReallyLongComponent < Turbomode::Component
+  class ReallyLongComponent < Turbomode::Components::Component
   end
 end
