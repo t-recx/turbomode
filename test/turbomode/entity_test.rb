@@ -21,7 +21,7 @@ describe "Entity" do
       @entity.fake.must_equal @fake_component
     end
 
-    it "should call on_add_component callback" do
+    it "should call callback" do
       called = false
 
       @entity.on_add_component = Proc.new { called = true }
@@ -31,7 +31,38 @@ describe "Entity" do
     end
   end
 
+  describe "delete" do
+    before do
+      add_fake_component
+    end
+
+    it "should delete component" do
+      delete_fake_component    
+
+      @entity.components.count.must_equal 0
+    end
+
+    it "should delete method" do
+      delete_fake_component
+
+      refute @entity.methods.respond_to? :fake
+    end
+
+    it "should call callback" do
+      called = false
+
+      @entity.on_delete_component = Proc.new { called = true }
+      delete_fake_component
+
+      called.must_equal true
+    end
+  end
+
   def add_fake_component
     @entity.add @fake_component
+  end
+
+  def delete_fake_component
+    @entity.delete @fake_component
   end
 end
