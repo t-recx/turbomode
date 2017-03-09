@@ -1,5 +1,11 @@
 module Turbomode
   class Component
+    attr_accessor :dependencies
+
+    def depends_upon(*dependencies)
+      @dependencies = dependencies
+    end
+
     def method_name
       underscore self.class.name.gsub("Component", "")
     end
