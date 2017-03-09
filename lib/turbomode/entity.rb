@@ -47,6 +47,8 @@ module Turbomode
     end
 
     def check_component_dependencies component
+      return unless component.dependencies
+
       component
       .dependencies
       .select { |d| not self.has? d }

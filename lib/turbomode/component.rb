@@ -2,12 +2,8 @@ module Turbomode
   class Component
     attr_accessor :dependencies
 
-    def initialize
-      @dependencies = []
-    end
-
     def depends_upon *list
-      @dependencies = list.to_a
+      @dependencies = list
     end
 
     def method_name
