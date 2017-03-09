@@ -6,12 +6,18 @@ module Turbomode
     attr_accessor :on_add_component
     attr_accessor :on_delete_component
 
+    alias_method :is?, :respond_to?
+    alias_method :has?, :respond_to?
+
     def initialize
       @components = Set.new
+
+      @on_add_component = nil
+      @on_delete_component = nil
     end
 
-    def add(component)
-      components.add(component) 
+    def add component
+      components.add component 
 
       (class << self; self; end).class_eval do
         define_method(component.method_name) { component }
@@ -20,14 +26,33 @@ module Turbomode
       @on_add_component.call if @on_add_component
     end
 
-    def delete(component)
-      components.delete(component)
+    def delete component
+      components.delete component
 
       (class << self; self; end).class_eval do
         remove_method component.method_name
       end
 
       @on_delete_component.call if @on_delete_component
+    end
+
+    def merge *components
+      components.each do |component|
+        add component
+      end
+    end
+
+    def check_dependencies
+      components.each { |component| check_component_dependencies component }
+    end
+
+    def check_component_dependencies component
+      component
+      .dependencies
+      .select { |d| not self.has? d }
+      .each do |d|
+        puts "(#{self}) Warning: #{component.class.name} depends on #{d}" 
+      end
     end
   end
 end
