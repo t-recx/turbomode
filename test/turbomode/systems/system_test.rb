@@ -11,7 +11,6 @@ describe "System" do
   describe "initialize" do
     it "should be properly initialized" do
       @system.on.must_equal true
-      @system.auto_turn_off.must_equal false
       @system.time_elapsed.must_equal 0
       @system.time_to_next_update.must_equal 0
       @system.last_time_updated.must_equal 0

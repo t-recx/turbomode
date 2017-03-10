@@ -2,7 +2,6 @@ module Turbomode
   module Systems
     class System
       attr_accessor :on
-      attr_accessor :auto_turn_off
       attr_accessor :time_elapsed
       attr_accessor :last_time_updated
       attr_accessor :time_to_next_update
@@ -11,7 +10,6 @@ module Turbomode
 
       def initialize
         @on = true
-        @auto_turn_off = false
         @time_elapsed = 0
         @last_time_updated = 0
         @time_to_next_update = 0
