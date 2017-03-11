@@ -20,5 +20,25 @@ module Turbomode
         system.last_time_updated = @wrapper.milliseconds
       end
     end
+    
+    def draw
+      scroll_x, scroll_y = @camera_helper.position
+
+      @systems.each do |s|
+        next unless s.on
+
+        @wrapper.translate(-scroll_x, -scroll_y) { s.draw(@entity_manager, true) }
+
+        s.draw(@entity_manager, false) 
+      end
+    end
+
+    def pause
+      @systems.map &:pause
+    end
+
+    def resume
+      @systems.map &:resume
+    end
   end
 end

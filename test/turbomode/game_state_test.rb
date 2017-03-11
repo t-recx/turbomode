@@ -3,6 +3,8 @@ require 'turbomode'
 require 'set'
 
 include Turbomode
+include Turbomode::Components
+include Turbomode::Helpers
 
 describe "Game State" do
   MILLISECONDS = 123
@@ -13,8 +15,8 @@ describe "Game State" do
     @systems = [@system1, @system2]
     @messages = Set.new
     @entity_manager = EntityManager.new
-    @camera_helper = Object.new
-    @wrapper = Object.new
+    @wrapper = Minitest::Mock.new
+    @camera_helper = CameraHelper.new @entity_manager
     @game_state = GameState.new @wrapper, @systems, @messages, @entity_manager, @camera_helper
 
     def @wrapper.milliseconds; MILLISECONDS; end;
@@ -82,9 +84,98 @@ describe "Game State" do
     end
   end
 
+  describe "draw" do
+    it "should call draw on every system" do
+      setup_systems_draw @systems
+      setup_systems_on @systems
+      setup_wrapper_translate
+
+      @game_state.draw
+
+      @systems.each { |s| s.verify }
+    end
+
+    it "should call translate on wrapper with camera coordinates" do
+      setup_camera
+      setup_systems_on @systems
+      setup_systems_draw @systems
+      setup_wrapper_translate -@camera.position.x, -@camera.position.y 
+
+      @game_state.draw
+
+      @wrapper.verify
+    end
+
+    it "should call draw with scrollable = true if we have a camera" do
+      setup_camera
+      setup_systems_on @systems
+      setup_systems_draw @systems, expect_scroll: true
+      def @wrapper.translate(x,y); yield; end;
+
+      @game_state.draw
+
+      @systems.each { |s| s.verify }
+    end
+
+    it "should skip system if system not on" do
+      @system1.expect :on, false
+      @system2.expect :on, true
+      setup_systems_draw [@system2]
+      setup_wrapper_translate
+
+      def @system1.draw(em, s); raise "Method should not be called here!"; end;
+
+      @game_state.draw
+    end
+  end
+
+  describe "pause" do
+    it "should call pause on every system" do
+      @systems.each { |s| s.expect :pause, nil }
+
+      @game_state.pause
+
+      @systems.each { |s| s.verify }
+    end
+  end
+
+  describe "resume" do
+    it "should call resume on every system" do
+      @systems.each { |s| s.expect :resume, nil }
+
+      @game_state.resume
+
+      @systems.each { |s| s.verify }
+    end
+  end
+
+  def setup_wrapper_translate sx = 0, sy = 0
+    @systems.count.times { @wrapper.expect :translate, nil, [sx, sy] }
+  end
+
+  def setup_camera
+    @camera = Entity.new
+    @camera.add CameraComponent.new
+    @camera.add PositionComponent.new
+    @camera.position.x = 10
+    @camera.position.y = 20
+    @entity_manager.add @camera
+  end
+
+  def setup_systems_on systems
+    set_bool systems, :on, true
+  end
+
   def setup_default_behaviour systems
-    set_bool @systems, :on, true
-    set_bool @systems, :paused, false
+    setup_systems_on systems
+    set_bool systems, :paused, false
+  end
+
+  def setup_systems_draw systems, expect_scroll: false
+    systems.each do |s| 
+      s.expect :draw, nil, [@entity_manager, true] if expect_scroll
+      s.expect :draw, nil, [@entity_manager, false]
+    end
   end
 
   def setup_last_time_updated systems
