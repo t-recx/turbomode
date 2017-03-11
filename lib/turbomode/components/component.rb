@@ -8,7 +8,7 @@ module Turbomode
       end
 
       def method_name
-        underscore self.class.name.gsub("Component", "")
+        underscore (self.class.name.split('::').last || '').gsub("Component", "")
       end
 
       def underscore(text)
