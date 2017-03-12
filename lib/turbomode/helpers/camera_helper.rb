@@ -6,7 +6,7 @@ module Turbomode
       end
 
       def camera
-        @camera ||= @entity_manager.find_with(:camera)
+        @camera ||= @entity_manager.find_with :camera, :position
       end
 
       def position
