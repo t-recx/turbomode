@@ -3,8 +3,6 @@ module Turbomode
     class PositionComponent < Component
       attr_accessor :prev_x
       attr_accessor :prev_y
-      attr_accessor :x
-      attr_accessor :y
       attr_accessor :z
 
       def initialize
@@ -12,9 +10,17 @@ module Turbomode
         @prev_x, @prev_y = 0, 0
       end
 
+      def x
+        @x
+      end
+
       def x=(x)
         @prev_x = @x
         @x = x
+      end
+
+      def y
+        @y
       end
 
       def y=(y)

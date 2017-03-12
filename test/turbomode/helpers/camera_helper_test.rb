@@ -18,8 +18,11 @@ describe "Camera Helper" do
 
   describe "camera" do
     it "should cache camera" do
-      def @entity_manager.times_called; @number_times_called; end;
-      def @entity_manager.find_with *x; @number_times_called = 0 unless @number_times_called; @number_times_called += 1; return Object.new; end;
+      def @entity_manager.times_called= v; @times_called = v; end;
+      def @entity_manager.times_called; @times_called; end;
+      def @entity_manager.find_with *x; @times_called += 1; return Object.new; end;
+
+      @entity_manager.times_called = 0
 
       @camera_helper.camera
       @camera_helper.camera

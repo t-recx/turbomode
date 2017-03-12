@@ -34,11 +34,11 @@ module Turbomode
     end
 
     def pause
-      @systems.map &:pause
+      @systems.map(&:pause)
     end
 
     def resume
-      @systems.map &:resume
+      @systems.map(&:resume)
     end
   end
 end

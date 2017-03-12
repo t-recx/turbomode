@@ -86,8 +86,8 @@ describe "Game State" do
 
   describe "draw" do
     it "should call draw on every system" do
-      setup_systems_draw @systems
       setup_systems_on @systems
+      setup_systems_draw @systems
       setup_wrapper_translate
 
       @game_state.draw
@@ -99,7 +99,7 @@ describe "Game State" do
       setup_camera
       setup_systems_on @systems
       setup_systems_draw @systems
-      setup_wrapper_translate -@camera.position.x, -@camera.position.y 
+      setup_wrapper_translate(-@camera.position.x, -@camera.position.y)
 
       @game_state.draw
 
