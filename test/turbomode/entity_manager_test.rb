@@ -203,6 +203,25 @@ describe "Entity Manager" do
         end
       end
     end
+
+    it "should return selection clone" do
+      @entity1.add SpriteComponent.new
+      @entity1.add SizeComponent.new
+
+      selection = @entity_manager.select with: [:sprite], without: [:scrollable]
+
+      selection.count.must_equal 1
+      assert selection.include? @entity1
+
+      @entity1.subtract @entity1.sprite
+
+      selection.count.must_equal 1
+      assert selection.include? @entity1
+
+      new_selection = @entity_manager.select with: [:sprite], without: [:scrollable]
+
+      new_selection.count.must_equal 0
+    end
   end
 
   describe "find" do

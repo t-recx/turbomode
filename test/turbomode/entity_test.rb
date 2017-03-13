@@ -67,6 +67,17 @@ describe "Entity" do
     end
   end
 
+  describe :subtract do
+    it "should delete components" do
+      add_position_component
+      @entity.add SizeComponent.new
+
+      @entity.subtract @entity.position, @entity.size
+
+      @entity.components.count.must_equal 0
+    end
+  end
+
   describe "has?" do
     it "should alias responds_to?" do
       @entity.add @position_component

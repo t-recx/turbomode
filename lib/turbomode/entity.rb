@@ -42,6 +42,10 @@ module Turbomode
       end
     end
 
+    def subtract *components
+      components.each { |component| delete component }
+    end
+
     def check_dependencies
       components.each { |component| check_component_dependencies component }
     end

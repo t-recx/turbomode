@@ -45,17 +45,18 @@ module Turbomode
     def select with: nil, without: nil, type: nil
       tag = "with:#{with.to_s}|without:#{without.to_s}|type:#{type.to_s}"
 
-      selections[tag] = { :selection => Set.new, :to_evaluate => entities.clone } unless selections[tag]
+      selections[tag] = { :selection => Set.new, :to_evaluate => entities.clone, :cached => Set.new } unless selections[tag]
 
       entities_to_evaluate = selections[tag][:to_evaluate]
 
       if entities_to_evaluate.length > 0 then
         selections[tag][:selection].merge _select entities_to_evaluate, with: with, without: without, type: type
+        selections[tag][:cached] = selections[tag][:selection].clone
 
         entities_to_evaluate.clear
       end
 
-      return selections[tag][:selection]
+      return selections[tag][:cached]
     end
 
     def _select entity_list, with: nil, without: nil, type: nil
