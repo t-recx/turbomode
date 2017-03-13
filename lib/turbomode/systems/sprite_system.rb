@@ -24,6 +24,8 @@ module Turbomode
         entities = scrollable ? @scrollable_entities : @unscrollable_entities
         
         entities.each do |e|
+          next unless e.sprite.sprite
+
           sprite = e.sprite.sprite
 
           if e.has? :position then

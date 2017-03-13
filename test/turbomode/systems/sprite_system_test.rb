@@ -78,6 +78,14 @@ describe SpriteSystem do
 
         @wrapper.verify
       end
+
+      it "should do nothing if sprite is nil" do
+        @entity3.sprite.sprite = nil
+
+        def @wrapper.draw_rot *p; raise "I shouldn't be called!"; end;
+
+        @sprite_system.draw @entity_manager, false
+      end
     end
   end
 
