@@ -21,5 +21,17 @@ module Turbomode
 
       return Gosu::Color::WHITE
     end
+
+    def get_key symbol
+      gosu_name = symbol.to_s.capitalize
+      gosu_name[2] = gosu_name[2].upcase if gosu_name.length > 2
+      constant = "Gosu::#{gosu_name}"
+
+      return Object.const_get constant
+    end
+
+    def button_down? b
+      Gosu::button_down? get_key(b)
+    end
   end
 end

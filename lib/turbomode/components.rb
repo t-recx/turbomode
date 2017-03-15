@@ -11,6 +11,7 @@ require "turbomode/components/scrollable_component"
 require "turbomode/components/rotation_component"
 require "turbomode/components/color_component"
 require "turbomode/components/scale_component"
+require "turbomode/components/input_movement_component"
 
 module Turbomode
   module Components
