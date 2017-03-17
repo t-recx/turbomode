@@ -23,7 +23,7 @@ module Turbomode
         define_method(component.method_name) { component }
       end
 
-      @on_add_component.call if @on_add_component
+      @on_add_component.call(component) if @on_add_component
     end
 
     def delete component
@@ -33,7 +33,7 @@ module Turbomode
         remove_method component.method_name
       end
 
-      @on_delete_component.call if @on_delete_component
+      @on_delete_component.call(component) if @on_delete_component
     end
 
     def merge *components

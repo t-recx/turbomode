@@ -38,8 +38,8 @@ describe "Entity Manager" do
 
       add_entity
 
-      @entity_manager.select with: [:first_fake]
-      @entity_manager.select without: [:first_fake]
+      @entity_manager.select with: [:first_fake, :second_fake]
+      @entity_manager.select without: [:first_fake, :second_fake]
 
       @entity.add SecondFakeComponent.new
 
@@ -62,6 +62,54 @@ describe "Entity Manager" do
       @entity_manager.selections.each do |key, value|
         refute value[:selection].include? @entity
         assert value[:to_evaluate].include? @entity
+      end
+    end
+
+    it "should not reevaluate entity on selections based on type" do
+      add_entity
+
+      @entity_manager.select_type String
+      @entity.add FirstFakeComponent.new
+
+      @entity_manager.selections.values.first[:to_evaluate].count.must_equal 0
+    end
+
+    it "should only reevaluate entity if selection with has component method as a filter" do
+      add_entity
+
+      @entity_manager.select_with :first_fake
+      @entity_manager.select_with :bla
+
+      @entity.add FirstFakeComponent.new
+
+      @entity_manager.selections.values.first[:to_evaluate].count.must_equal 1
+      @entity_manager.selections.values.drop(1).first[:to_evaluate].count.must_equal 0
+
+    end
+
+    it "should only reevaluate entity if selection without has component method as a filter" do
+      add_entity
+
+      @entity_manager.select_without :first_fake
+      @entity_manager.select_without :bla
+
+      @entity.add FirstFakeComponent.new
+
+      @entity_manager.selections.values.first[:to_evaluate].count.must_equal 1
+      @entity_manager.selections.values.drop(1).first[:to_evaluate].count.must_equal 0
+
+    end
+
+    it "should only reevaluate entity if selection with or without has component method as a filter" do
+      add_entity
+
+      @entity_manager.select with: [:first_fake], without: [:bla]
+      @entity_manager.select without: [:first_fake], with: [:bla]
+
+      @entity.add FirstFakeComponent.new
+
+      @entity_manager.selections.values.each do |value|
+        value[:to_evaluate].count.must_equal 1
       end
     end
   end
@@ -188,8 +236,8 @@ describe "Entity Manager" do
         @entity_manager.select_with :first_fake
         @entity_manager.select_without :first_fake
 
-        @entity1.add Component.new
-        @entity3.add Component.new
+        @entity1.add FirstFakeComponent.new
+        @entity3.add FirstFakeComponent.new
 
         @entity_manager.selections.each do |key, value|
           value[:to_evaluate].count.must_equal 2
@@ -221,6 +269,15 @@ describe "Entity Manager" do
       new_selection = @entity_manager.select with: [:sprite], without: [:scrollable]
 
       new_selection.count.must_equal 0
+    end
+
+    it "should set hash data with filters" do 
+      @entity_manager.select with: [:a, :b], without: [:c, :d], type: :d
+
+      selection = @entity_manager.selections.values.first
+      selection[:with].must_equal [:a, :b]
+      selection[:without].must_equal [:c, :d]
+      selection[:type].must_equal :d
     end
   end
 

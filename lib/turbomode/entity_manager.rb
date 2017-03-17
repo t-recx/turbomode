@@ -11,8 +11,8 @@ module Turbomode
     end
 
     def add entity
-      entity.on_add_component = lambda { reevaluate entity  }
-      entity.on_delete_component = lambda { reevaluate entity  }
+      entity.on_add_component = lambda { |component| reevaluate entity, component }
+      entity.on_delete_component = lambda { |component| reevaluate entity, component }
 
       entities.add entity
 
@@ -45,7 +45,7 @@ module Turbomode
     def select with: nil, without: nil, type: nil
       tag = "with:#{with.to_s}|without:#{without.to_s}|type:#{type.to_s}"
 
-      selections[tag] = { :selection => Set.new, :to_evaluate => entities.clone, :cached => Set.new } unless selections[tag]
+      selections[tag] = { selection: Set.new, to_evaluate: entities.clone, cached: Set.new, with: with, without: without, type: type } unless selections[tag]
 
       entities_to_evaluate = selections[tag][:to_evaluate]
 
@@ -99,12 +99,21 @@ module Turbomode
       find type: type
     end
 
-    def reevaluate entity
+    def reevaluate entity, component = nil
       selections.each do |key, value|
+        if component then
+         next if value[:type] and not (value[:with] or value[:without]) 
+         next unless has_filter(value, :with, component) or has_filter(value, :without, component)
+        end
+
         value[:selection].delete entity
 
         value[:to_evaluate].add entity
       end
+    end
+
+    def has_filter value, symbol, component
+      return (value[symbol] and value[symbol].any? { |x| x == component.method_name.to_sym })
     end
   end
 end
