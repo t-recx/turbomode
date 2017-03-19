@@ -65,7 +65,7 @@ describe "Entity Manager" do
       end
     end
 
-    it "should not reevaluate entity on selections based on type" do
+    it "should not reevaluate entity after adding component on selections based on type" do
       add_entity
 
       @entity_manager.select_type String
@@ -111,6 +111,16 @@ describe "Entity Manager" do
       @entity_manager.selections.values.each do |value|
         value[:to_evaluate].count.must_equal 1
       end
+    end
+
+    it "shouldn't add more than once the entity to the evaluate array, on selections hash" do
+      add_entity
+
+      @entity_manager.select_with :first_fake, :second_fake
+      @entity.add FirstFakeComponent.new
+      @entity.add SecondFakeComponent.new
+
+      @entity_manager.selections.values.first[:to_evaluate].count.must_equal 1
     end
   end
 
