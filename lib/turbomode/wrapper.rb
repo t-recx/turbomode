@@ -2,6 +2,10 @@ require 'gosu'
 
 module Turbomode
   class Wrapper
+    def initialize window
+      @window = window
+    end
+
     def milliseconds
       Gosu::milliseconds
     end
@@ -32,6 +36,14 @@ module Turbomode
 
     def button_down? b
       Gosu::button_down? get_key(b)
+    end
+
+    def get_mouse_x
+      @window.mouse_x
+    end
+
+    def get_mouse_y
+      @window.mouse_y
     end
   end
 end
