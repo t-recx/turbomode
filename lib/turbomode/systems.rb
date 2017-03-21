@@ -5,6 +5,7 @@ require "turbomode/systems/sprite_system"
 require "turbomode/systems/input_movement_system"
 require "turbomode/systems/key_message_system"
 require "turbomode/systems/mouse_movement_system"
+require "turbomode/systems/timer_system"
 
 module Turbomode
   module Systems
