@@ -3,13 +3,23 @@ require 'turbomode'
 include Turbomode
 include Turbomode::Components
 
-describe "Entity" do
+describe Entity do
   before do
     @entity = Entity.new
     @position_component = PositionComponent.new
   end
 
-  describe "add" do
+  describe :initialize do
+    it "should merge components if parameter supplied" do
+      animation_component = AnimationComponent.new
+      new_entity = Entity.new(@position_component, animation_component)
+
+      new_entity.components.include? @position_component
+      new_entity.components.include? animation_component
+    end
+  end
+
+  describe :add do
     it "should add component" do 
       add_position_component
 
@@ -32,7 +42,7 @@ describe "Entity" do
     end
   end
 
-  describe "merge" do
+  describe :merge do
     it "should add multiple components" do
       @entity.merge PositionComponent.new, AnotherFakeComponent.new
 
@@ -40,7 +50,7 @@ describe "Entity" do
     end
   end
 
-  describe "delete" do
+  describe :delete do
     before do
       add_position_component
     end
@@ -78,7 +88,7 @@ describe "Entity" do
     end
   end
 
-  describe "has?" do
+  describe :has do
     it "should alias responds_to?" do
       @entity.add @position_component
 
@@ -86,7 +96,7 @@ describe "Entity" do
     end
   end
 
-  describe "is?" do
+  describe :is do
     it "should alias responds_to?" do
       @entity.add @position_component
 
@@ -94,7 +104,7 @@ describe "Entity" do
     end
   end
 
-  describe "check_dependencies" do
+  describe :check_dependencies do
     it "should spit out component dependencies" do
       @entity.add AdditionalFakeComponent.new 
 

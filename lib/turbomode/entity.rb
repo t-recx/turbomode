@@ -9,11 +9,13 @@ module Turbomode
     alias_method :is?, :respond_to?
     alias_method :has?, :respond_to?
 
-    def initialize
+    def initialize *component_list
       @components = Set.new
 
       @on_add_component = nil
       @on_delete_component = nil
+
+      merge *component_list
     end
 
     def add component
