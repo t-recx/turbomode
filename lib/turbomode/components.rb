@@ -16,6 +16,8 @@ require "turbomode/components/mouse_movement_component"
 require "turbomode/components/key_message_component"
 require "turbomode/components/timer_component"
 require "turbomode/components/position_aggregator_component"
+require "turbomode/components/platform_component"
+require "turbomode/components/platform_transportable_component"
 
 module Turbomode
   module Components
