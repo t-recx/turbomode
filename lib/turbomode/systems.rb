@@ -8,6 +8,7 @@ require "turbomode/systems/mouse_movement_system"
 require "turbomode/systems/timer_system"
 require "turbomode/systems/position_aggregator_system"
 require "turbomode/systems/platform_system"
+require "turbomode/systems/position_homologator_system"
 
 module Turbomode
   module Systems
