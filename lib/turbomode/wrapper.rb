@@ -18,6 +18,13 @@ module Turbomode
       sprite.draw_rot(sprite, x, y, z, angle, center_x, center_y, scale_x, scale_y, color)
     end
 
+    def draw_text(text, x, y, z, rel_x, rel_y, scale_x, scale_y, color, font: nil, font_size: nil)
+      raise "TODO: code this method"
+      
+      #dont forget to call get_color on color before draw
+      #@font_factory.get_font(tc.font_size).draw_rel(tc.text, x + tc.offset_x, y + tc.offset_y, z, tc.rel_x, tc.rel_y, tc.scale_x, tc.scale_y, color) 
+    end
+
     def get_color symbol
       constant = "Gosu::Color::#{symbol.to_s.upcase}"
 
@@ -44,6 +51,14 @@ module Turbomode
 
     def get_mouse_y
       @window.mouse_y
+    end
+
+    def screen_width
+      @window.width
+    end
+
+    def screen_height
+      @window.height
     end
   end
 end
