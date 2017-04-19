@@ -20,6 +20,7 @@ require "turbomode/components/platform_component"
 require "turbomode/components/platform_transportable_component"
 require "turbomode/components/position_homologator_component"
 require "turbomode/components/text_component"
+require "turbomode/components/input_locked_movement_component"
 
 module Turbomode
   module Components

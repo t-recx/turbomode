@@ -10,6 +10,7 @@ require "turbomode/systems/position_aggregator_system"
 require "turbomode/systems/platform_system"
 require "turbomode/systems/position_homologator_system"
 require "turbomode/systems/text_system"
+require "turbomode/systems/input_locked_movement_system"
 
 module Turbomode
   module Systems
