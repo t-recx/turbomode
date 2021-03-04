@@ -22,7 +22,7 @@ describe KeyMessageSystem do
 
       system.update entity_manager_mock, messages
 
-      messages.must_equal ["abc"]
+      _(messages).must_equal ["abc"]
     end
 
     it "should do nothing if no key pressed" do
@@ -30,7 +30,7 @@ describe KeyMessageSystem do
 
       system.update entity_manager_mock, messages
 
-      messages.count.must_equal 0
+      _(messages.count).must_equal 0
     end
 
     it "should do nothing if message is nil" do
@@ -39,7 +39,7 @@ describe KeyMessageSystem do
 
       system.update entity_manager_mock, messages
 
-      messages.count.must_equal 0
+      _(messages.count).must_equal 0
     end
   end
 end

@@ -21,8 +21,8 @@ describe SpriteSystem do
 
   describe :initialize do
     it "should initialize entities" do
-      @sprite_system.scrollable_entities.must_equal Set.new
-      @sprite_system.unscrollable_entities.must_equal Set.new
+      _(@sprite_system.scrollable_entities).must_equal Set.new
+      _(@sprite_system.unscrollable_entities).must_equal Set.new
     end
   end
 
@@ -32,14 +32,14 @@ describe SpriteSystem do
 
       @sprite_system.scrollable_entities.include? @entity1 
       @sprite_system.scrollable_entities.include? @entity2
-      @sprite_system.scrollable_entities.count.must_equal 2
+      _(@sprite_system.scrollable_entities.count).must_equal 2
     end
 
     it "should select with: [:sprite], without: [:scrollable]" do
       @sprite_system.update @entity_manager, @messages 
 
       @sprite_system.unscrollable_entities.include? @entity3
-      @sprite_system.unscrollable_entities.count.must_equal 1
+      _(@sprite_system.unscrollable_entities.count).must_equal 1
     end
   end
 

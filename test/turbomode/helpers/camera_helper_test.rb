@@ -27,19 +27,19 @@ describe "Camera Helper" do
       @camera_helper.camera
       @camera_helper.camera
 
-      @entity_manager.times_called.must_equal 1
+      _(@entity_manager.times_called).must_equal 1
     end
   end
 
   describe "position" do
     it "should get camera position" do
-      @camera_helper.position.must_equal [@camera.position.x, @camera.position.y]
+      _(@camera_helper.position).must_equal [@camera.position.x, @camera.position.y]
     end
 
     it "should be 0, 0 if no camera" do
       @entity_manager.delete @camera
 
-      @camera_helper.position.must_equal [0, 0]
+      _(@camera_helper.position).must_equal [0, 0]
     end
   end
 end

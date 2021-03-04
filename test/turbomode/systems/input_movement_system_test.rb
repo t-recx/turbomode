@@ -22,7 +22,7 @@ describe InputMovementSystem do
 
   describe :initialize do
     it "should set allow_pause to true" do
-      input_movement_system.allow_pause.must_equal true
+      _(input_movement_system.allow_pause).must_equal true
     end
   end
 
@@ -41,8 +41,8 @@ describe InputMovementSystem do
 
       input_movement_system.update entity_manager, messages
 
-      entity.position.x.must_equal 0
-      entity.position.y.must_equal 1
+      _(entity.position.x).must_equal 0
+      _(entity.position.y).must_equal 1
     end
 
     it "should set state = idle on entity if has state" do
@@ -53,7 +53,7 @@ describe InputMovementSystem do
 
       input_movement_system.update entity_manager, messages
 
-      entity.state.state.must_equal :idle
+      _(entity.state.state).must_equal :idle
     end
 
     it "should set state = moving on entity if key pressed" do
@@ -63,7 +63,7 @@ describe InputMovementSystem do
 
       input_movement_system.update entity_manager, messages
 
-      entity.state.state.must_equal :moving
+      _(entity.state.state).must_equal :moving
     end
 
     it "should set direction accordingly if key pressed" do
@@ -74,7 +74,7 @@ describe InputMovementSystem do
 
       input_movement_system.update entity_manager, messages
 
-      entity.direction.direction.must_equal :right
+      _(entity.direction.direction).must_equal :right
     end
 
     it "should set key press milliseconds" do
@@ -83,7 +83,7 @@ describe InputMovementSystem do
 
       input_movement_system.update entity_manager, messages
 
-      input_movement.keys_time_pressed[:kbdown].must_equal 3
+      _(input_movement.keys_time_pressed[:kbdown]).must_equal 3
     end
 
     it "should only acknowledge key press if sufficient time passed" do
@@ -95,7 +95,7 @@ describe InputMovementSystem do
         input_movement_system.update entity_manager, messages
       end 
 
-      entity.position.y.must_equal 1
+      _(entity.position.y).must_equal 1
     end
 
     it "should allow another key press to change position when sufficient time passed" do
@@ -106,7 +106,7 @@ describe InputMovementSystem do
       set_button_down_expect wrapper_mock, input_movement, :kbdown
       input_movement_system.update entity_manager, messages
 
-      entity.position.y.must_equal 2
+      _(entity.position.y).must_equal 2
     end
 
     def set_button_down_expect w, im, button_down_symbol = nil

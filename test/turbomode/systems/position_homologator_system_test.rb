@@ -19,7 +19,7 @@ describe PositionHomologatorSystem do
 
       subject.update entity_manager, []
 
-      [entity.position.x, entity.position.y].must_equal [0, 16] 
+      _([entity.position.x, entity.position.y]).must_equal [0, 16] 
     end
   end
 end

@@ -20,7 +20,7 @@ describe MouseMovementSystem do
 
   describe :initialize do
     it "should allow system to be paused" do
-      system.allow_pause.must_equal true
+      _(system.allow_pause).must_equal true
     end
   end
 
@@ -34,8 +34,8 @@ describe MouseMovementSystem do
     it "should update entities with mouse's coordinates" do
       system.update entity_manager, messages
 
-      entity.position.x.must_equal mouse_x
-      entity.position.y.must_equal mouse_y
+      _(entity.position.x).must_equal mouse_x
+      _(entity.position.y).must_equal mouse_y
     end
 
     describe "when entities are scrollable" do
@@ -44,8 +44,8 @@ describe MouseMovementSystem do
 
         system.update entity_manager, messages
 
-        entity.position.x.must_equal mouse_x + camera_x
-        entity.position.y.must_equal mouse_y + camera_y
+        _(entity.position.x).must_equal mouse_x + camera_x
+        _(entity.position.y).must_equal mouse_y + camera_y
       end
     end
   end

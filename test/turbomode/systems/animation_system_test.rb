@@ -48,7 +48,7 @@ describe AnimationSystem do
 
       @animation_system.update @entity_manager, @messages
 
-      @animation_component.current_frame_position.must_equal 0
+      _(@animation_component.current_frame_position).must_equal 0
     end
 
     it "should change to next frame if it's time to do it" do
@@ -56,8 +56,8 @@ describe AnimationSystem do
 
       @animation_system.update @entity_manager, @messages
 
-      @animation_component.current_frame_position.must_equal 1
-      @entity.sprite.sprite.must_equal @sprite2
+      _(@animation_component.current_frame_position).must_equal 1
+      _(@entity.sprite.sprite).must_equal @sprite2
     end
 
     it "should update last_time_frame_update" do
@@ -65,7 +65,7 @@ describe AnimationSystem do
 
       @animation_system.update @entity_manager, @messages
 
-      @animation_component.last_time_frame_update.must_equal @frame_duration + 1
+      _(@animation_component.last_time_frame_update).must_equal @frame_duration + 1
     end
 
     it "should reset animation from beginning if no frames left in sequence" do
@@ -74,7 +74,7 @@ describe AnimationSystem do
 
       @animation_system.update @entity_manager, @messages
 
-      @animation_component.current_frame_position.must_equal 0
+      _(@animation_component.current_frame_position).must_equal 0
     end
 
     it "should reset animation from beginning if state changed and no frames for state on current position" do
@@ -84,7 +84,7 @@ describe AnimationSystem do
 
       @animation_system.update @entity_manager, @messages
 
-      @animation_component.current_frame_position.must_equal 0
+      _(@animation_component.current_frame_position).must_equal 0
     end
 
     it "should reset animation from beginning if direction changed and no frames for direction on current position" do
@@ -94,7 +94,7 @@ describe AnimationSystem do
 
       @animation_system.update @entity_manager, @messages
 
-      @animation_component.current_frame_position.must_equal 0
+      _(@animation_component.current_frame_position).must_equal 0
     end
   end
 

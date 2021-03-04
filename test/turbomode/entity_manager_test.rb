@@ -18,7 +18,7 @@ describe "Entity Manager" do
     it "should add entity to set" do
       add_entity  
 
-      @entity_manager.entities.count.must_equal 1
+      _(@entity_manager.entities.count).must_equal 1
       assert @entity_manager.entities.include? @entity
     end
 
@@ -71,7 +71,7 @@ describe "Entity Manager" do
       @entity_manager.select_type String
       @entity.add FirstFakeComponent.new
 
-      @entity_manager.selections.values.first[:to_evaluate].count.must_equal 0
+      _(@entity_manager.selections.values.first[:to_evaluate].count).must_equal 0
     end
 
     it "should only reevaluate entity if selection with has component method as a filter" do
@@ -82,8 +82,8 @@ describe "Entity Manager" do
 
       @entity.add FirstFakeComponent.new
 
-      @entity_manager.selections.values.first[:to_evaluate].count.must_equal 1
-      @entity_manager.selections.values.drop(1).first[:to_evaluate].count.must_equal 0
+      _(@entity_manager.selections.values.first[:to_evaluate].count).must_equal 1
+      _(@entity_manager.selections.values.drop(1).first[:to_evaluate].count).must_equal 0
 
     end
 
@@ -95,8 +95,8 @@ describe "Entity Manager" do
 
       @entity.add FirstFakeComponent.new
 
-      @entity_manager.selections.values.first[:to_evaluate].count.must_equal 1
-      @entity_manager.selections.values.drop(1).first[:to_evaluate].count.must_equal 0
+      _(@entity_manager.selections.values.first[:to_evaluate].count).must_equal 1
+      _(@entity_manager.selections.values.drop(1).first[:to_evaluate].count).must_equal 0
 
     end
 
@@ -109,7 +109,7 @@ describe "Entity Manager" do
       @entity.add FirstFakeComponent.new
 
       @entity_manager.selections.values.each do |value|
-        value[:to_evaluate].count.must_equal 1
+        _(value[:to_evaluate].count).must_equal 1
       end
     end
 
@@ -120,7 +120,7 @@ describe "Entity Manager" do
       @entity.add FirstFakeComponent.new
       @entity.add SecondFakeComponent.new
 
-      @entity_manager.selections.values.first[:to_evaluate].count.must_equal 1
+      _(@entity_manager.selections.values.first[:to_evaluate].count).must_equal 1
     end
   end
 
@@ -132,7 +132,7 @@ describe "Entity Manager" do
     it "should delete entity from set" do
       @entity_manager.delete @entity
 
-      @entity_manager.entities.count.must_equal 0
+      _(@entity_manager.entities.count).must_equal 0
     end
 
     it "should delete entity from selections" do
@@ -152,7 +152,7 @@ describe "Entity Manager" do
     it "should add multiple entities" do
       @entity_manager.merge Entity.new, Entity.new, Entity.new
 
-      @entity_manager.entities.count.must_equal 3
+      _(@entity_manager.entities.count).must_equal 3
     end
   end
 
@@ -166,7 +166,7 @@ describe "Entity Manager" do
 
       @entity_manager.subtract a, b
 
-      @entity_manager.entities.count.must_equal 1
+      _(@entity_manager.entities.count).must_equal 1
       @entity_manager.entities.include? c
     end
   end
@@ -188,7 +188,7 @@ describe "Entity Manager" do
 
         selection = @entity_manager.select with: [:first_fake, :second_fake]
 
-        selection.count.must_equal 2
+        _(selection.count).must_equal 2
         assert selection.include? @entity1
         assert selection.include? @entity3
       end
@@ -201,7 +201,7 @@ describe "Entity Manager" do
 
         selection = @entity_manager.select without: [:first_fake, :second_fake]
 
-        selection.count.must_equal 1
+        _(selection.count).must_equal 1
         assert selection.include? @entity1
       end
     end
@@ -210,7 +210,7 @@ describe "Entity Manager" do
       it "should return entities of type" do
         selection = @entity_manager.select type: FirstTypeEntity
 
-        selection.count.must_equal 2
+        _(selection.count).must_equal 2
         assert selection.include? @entity1
         assert selection.include? @entity2
       end
@@ -224,7 +224,7 @@ describe "Entity Manager" do
 
         selection = @entity_manager.select with: [:first_fake], without: [:second_fake], type: FirstTypeEntity
 
-        selection.count.must_equal 1
+        _(selection.count).must_equal 1
         assert selection.include? @entity1
       end
     end
@@ -236,10 +236,10 @@ describe "Entity Manager" do
         selection = @entity_manager.select with: [:first_fake]
         new_selection = @entity_manager.select with: [:first_fake]
 
-        @entity_manager.selections.count.must_equal 1
-        @entity_manager.selections.keys.first.must_equal "with:[:first_fake]|without:|type:"
+        _(@entity_manager.selections.count).must_equal 1
+        _(@entity_manager.selections.keys.first).must_equal "with:[:first_fake]|without:|type:"
 
-        selection.object_id.must_equal new_selection.object_id
+        _(selection.object_id).must_equal new_selection.object_id
       end
 
       it "should evaluate entities on to_evaluate lists on new selection" do
@@ -250,14 +250,14 @@ describe "Entity Manager" do
         @entity3.add FirstFakeComponent.new
 
         @entity_manager.selections.each do |key, value|
-          value[:to_evaluate].count.must_equal 2
+          _(value[:to_evaluate].count).must_equal 2
         end
 
         @entity_manager.select_with :first_fake
         @entity_manager.select_without :first_fake
       
         @entity_manager.selections.each do |key, value|
-          value[:to_evaluate].count.must_equal 0
+          _(value[:to_evaluate].count).must_equal 0
         end
       end
     end
@@ -268,26 +268,26 @@ describe "Entity Manager" do
 
       selection = @entity_manager.select with: [:sprite], without: [:scrollable]
 
-      selection.count.must_equal 1
+      _(selection.count).must_equal 1
       assert selection.include? @entity1
 
       @entity1.subtract @entity1.sprite
 
-      selection.count.must_equal 1
+      _(selection.count).must_equal 1
       assert selection.include? @entity1
 
       new_selection = @entity_manager.select with: [:sprite], without: [:scrollable]
 
-      new_selection.count.must_equal 0
+      _(new_selection.count).must_equal 0
     end
 
     it "should set hash data with filters" do 
       @entity_manager.select with: [:a, :b], without: [:c, :d], type: :d
 
       selection = @entity_manager.selections.values.first
-      selection[:with].must_equal [:a, :b]
-      selection[:without].must_equal [:c, :d]
-      selection[:type].must_equal :d
+      _(selection[:with]).must_equal [:a, :b]
+      _(selection[:without]).must_equal [:c, :d]
+      _(selection[:type]).must_equal :d
     end
   end
 
@@ -301,7 +301,7 @@ describe "Entity Manager" do
 
       @entity_manager.merge a, b
 
-      (@entity_manager.find with: [:first_fake]).must_equal a
+      _((@entity_manager.find with: [:first_fake])).must_equal a
     end
   end
 
@@ -318,8 +318,8 @@ describe "Entity Manager" do
       it "should select correctly" do
         selection = @entity_manager.select_with :first_fake, :second_fake
 
-        selection.count.must_equal 1
-        selection.first.must_equal @entity3
+        _(selection.count).must_equal 1
+        _(selection.first).must_equal @entity3
       end
     end
 
@@ -327,8 +327,8 @@ describe "Entity Manager" do
       it "should select correctly" do
         selection = @entity_manager.select_without :first_fake
 
-        selection.count.must_equal 1
-        selection.first.must_equal @entity2
+        _(selection.count).must_equal 1
+        _(selection.first).must_equal @entity2
       end
     end
 
@@ -336,8 +336,8 @@ describe "Entity Manager" do
       it "should select correctly" do
         selection = @entity_manager.select_type SecondTypeEntity
 
-        selection.count.must_equal 1
-        selection.first.must_equal @entity3
+        _(selection.count).must_equal 1
+        _(selection.first).must_equal @entity3
       end
     end
 
@@ -345,7 +345,7 @@ describe "Entity Manager" do
       it "should find correctly" do
         item = @entity_manager.find_with :first_fake
 
-        item.must_equal @entity1
+        _(item).must_equal @entity1
       end
     end
 
@@ -353,7 +353,7 @@ describe "Entity Manager" do
       it "should find correctly" do
         item = @entity_manager.find_without :first_fake
 
-        item.must_equal @entity2
+        _(item).must_equal @entity2
       end
     end
 
@@ -361,7 +361,7 @@ describe "Entity Manager" do
       it "should find correctly" do
         item = @entity_manager.find_type FirstTypeEntity
 
-        item.must_equal @entity1
+        _(item).must_equal @entity1
       end
     end
   end

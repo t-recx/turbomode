@@ -14,11 +14,11 @@ describe InputMovementComponent do
 
       cloned_component = input_movement.clone
 
-      cloned_component.wont_equal input_movement
-      cloned_component.keys_movement.object_id.wont_equal input_movement.keys_movement.object_id
-      cloned_component.keys_time_pressed.object_id.wont_equal input_movement.keys_time_pressed.object_id
-      cloned_component.keys_time_pressed.must_equal input_movement.keys_time_pressed
-      cloned_component.keys_movement.must_equal input_movement.keys_movement
+      _(cloned_component).wont_equal input_movement
+      _(cloned_component.keys_movement.object_id).wont_equal input_movement.keys_movement.object_id
+      _(cloned_component.keys_time_pressed.object_id).wont_equal input_movement.keys_time_pressed.object_id
+      _(cloned_component.keys_time_pressed).must_equal input_movement.keys_time_pressed
+      _(cloned_component.keys_movement).must_equal input_movement.keys_movement
     end
   end
 end

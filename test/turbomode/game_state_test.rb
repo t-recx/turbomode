@@ -71,7 +71,7 @@ describe "Game State" do
 
       @game_state.update
 
-      @systems.each { |s| s.last_time_updated.must_equal MILLISECONDS } 
+      @systems.each { |s| _(s.last_time_updated).must_equal MILLISECONDS } 
     end
 
     it "should not update if time_to_next_update not ellapsed" do

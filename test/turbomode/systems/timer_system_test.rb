@@ -27,7 +27,7 @@ describe TimerSystem do
     it "should update milliseconds_last with current time if nil" do
       subject.update entity_manager, messages    
 
-      entity.timer.milliseconds_last.must_equal wrapper.milliseconds
+      _(entity.timer.milliseconds_last).must_equal wrapper.milliseconds
     end
 
     it "should do nothing if timer off" do
@@ -35,7 +35,7 @@ describe TimerSystem do
 
       subject.update entity_manager, messages    
 
-      entity.timer.milliseconds_last.must_be_nil
+      _(entity.timer.milliseconds_last).must_be_nil
     end
 
     it "should update entity's value with change variable if enough time passed" do
@@ -46,7 +46,7 @@ describe TimerSystem do
         wrapper.milliseconds += 10 * t 
         subject.update entity_manager, messages
 
-        entity.timer.value.must_equal 3 + t * 3
+        _(entity.timer.value).must_equal 3 + t * 3
       end
     end
 
@@ -55,7 +55,7 @@ describe TimerSystem do
 
       subject.update entity_manager, messages
 
-      entity.timer.value.must_equal 0
+      _(entity.timer.value).must_equal 0
     end
 
     describe "when paused" do
@@ -70,13 +70,13 @@ describe TimerSystem do
         subject.resume
         subject.update entity_manager, messages
 
-        entity.timer.milliseconds_last.must_equal 100
+        _(entity.timer.milliseconds_last).must_equal 100
       end
 
       it "should set time_paused to nil after update" do
         subject.update entity_manager, messages
 
-        subject.time_paused.must_be_nil
+        _(subject.time_paused).must_be_nil
       end
     end
   end
@@ -85,7 +85,7 @@ describe TimerSystem do
     it "should set time_paused to current time" do
       subject.pause
 
-      subject.time_paused.must_equal wrapper.milliseconds
+      _(subject.time_paused).must_equal wrapper.milliseconds
     end
   end
 end

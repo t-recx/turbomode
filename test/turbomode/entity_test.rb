@@ -23,13 +23,13 @@ describe Entity do
     it "should add component" do 
       add_position_component
 
-      @entity.components.count.must_equal 1
+      _(@entity.components.count).must_equal 1
     end
 
     it "should create method on entity" do
       add_position_component     
 
-      @entity.position.must_equal @position_component
+      _(@entity.position).must_equal @position_component
     end
 
     it "should call callback" do
@@ -38,7 +38,7 @@ describe Entity do
       @entity.on_add_component = Proc.new { called = true }
       add_position_component
 
-      called.must_equal true
+      _(called).must_equal true
     end
   end
 
@@ -46,7 +46,7 @@ describe Entity do
     it "should add multiple components" do
       @entity.merge PositionComponent.new, AnotherFakeComponent.new
 
-      @entity.components.count.must_equal 2
+      _(@entity.components.count).must_equal 2
     end
   end
 
@@ -58,7 +58,7 @@ describe Entity do
     it "should delete component" do
       delete_position_component    
 
-      @entity.components.count.must_equal 0
+      _(@entity.components.count).must_equal 0
     end
 
     it "should delete method" do
@@ -73,7 +73,7 @@ describe Entity do
       @entity.on_delete_component = Proc.new { called = true }
       delete_position_component
 
-      called.must_equal true
+      _(called).must_equal true
     end
   end
 
@@ -84,7 +84,7 @@ describe Entity do
 
       @entity.subtract @entity.position, @entity.size
 
-      @entity.components.count.must_equal 0
+      _(@entity.components.count).must_equal 0
     end
   end
 

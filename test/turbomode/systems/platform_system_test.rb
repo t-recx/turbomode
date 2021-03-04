@@ -25,8 +25,8 @@ describe PlatformSystem do
 
       subject.update entity_manager, []
 
-      entity.position_aggregator.entities.count.must_equal 1
-      entity.position_aggregator.entities[transported_entity].must_equal(position_hash(entity, transported_entity))
+      _(entity.position_aggregator.entities.count).must_equal 1
+      _(entity.position_aggregator.entities[transported_entity]).must_equal(position_hash(entity, transported_entity))
     end
 
     it "should set first position on aggregator and stick with it" do
@@ -40,7 +40,7 @@ describe PlatformSystem do
         transported_entity.position.y = rand 100
       end
 
-      entity.position_aggregator.entities[transported_entity].must_equal original_position_hash
+      _(entity.position_aggregator.entities[transported_entity]).must_equal original_position_hash
     end
 
     it "should have platforms ignoring entities that are not transportable or do not have position" do
@@ -60,7 +60,7 @@ describe PlatformSystem do
 
       subject.update entity_manager, []
 
-      entity.position_aggregator.entities.count.must_equal 0
+      _(entity.position_aggregator.entities.count).must_equal 0
     end
 
     it "should take entity out of aggregator if collision stops" do
@@ -72,7 +72,7 @@ describe PlatformSystem do
 
       subject.update entity_manager, []
 
-      entity.position_aggregator.entities.count.must_equal 0
+      _(entity.position_aggregator.entities.count).must_equal 0
     end
 
     it "should take entity out of aggregator if it changes state to something exempted from platforming" do
@@ -86,7 +86,7 @@ describe PlatformSystem do
 
       subject.update entity_manager, []
 
-      entity.position_aggregator.entities.count.must_equal 0
+      _(entity.position_aggregator.entities.count).must_equal 0
     end
   end
 

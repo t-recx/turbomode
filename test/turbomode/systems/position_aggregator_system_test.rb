@@ -32,8 +32,8 @@ describe PositionAggregatorSystem do
 
       subject.update entity_manager, []
 
-      [aggregated_entity1.position.x, aggregated_entity1.position.y].must_equal [entity.position.x + entity1_offset_x, entity.position.y + entity1_offset_y]
-      [aggregated_entity2.position.x, aggregated_entity2.position.y].must_equal [entity.position.x + entity2_offset_x, entity.position.y + entity2_offset_y]
+      _([aggregated_entity1.position.x, aggregated_entity1.position.y]).must_equal [entity.position.x + entity1_offset_x, entity.position.y + entity1_offset_y]
+      _([aggregated_entity2.position.x, aggregated_entity2.position.y]).must_equal [entity.position.x + entity2_offset_x, entity.position.y + entity2_offset_y]
     end
 
     it "should be okay if one of the aggregated entities doesn't have a position component" do

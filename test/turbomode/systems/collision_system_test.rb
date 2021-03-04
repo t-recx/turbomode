@@ -43,8 +43,8 @@ describe CollisionSystem do
 
       @collision_system.update @entity_manager, @messages
 
-      entity.collision.br_x.must_equal 0
-      entity.collision.br_y.must_equal 0
+      _(entity.collision.br_x).must_equal 0
+      _(entity.collision.br_y).must_equal 0
     end
 
     it "should set bounding width, height using size on nil" do
@@ -56,8 +56,8 @@ describe CollisionSystem do
 
       @collision_system.update @entity_manager, @messages
 
-      entity.collision.br_width.must_equal entity.size.width
-      entity.collision.br_height.must_equal entity.size.height
+      _(entity.collision.br_width).must_equal entity.size.width
+      _(entity.collision.br_height).must_equal entity.size.height
     end
 
     def collision_testcase(x1, y1, w1, h1, x2, y2, w2, h2)
@@ -81,14 +81,14 @@ describe CollisionSystem do
 
   def assert_collision entities
     entities.each do |e|
-      e.collision.entities_colliding.count.must_equal entities.count - 1
+      _(e.collision.entities_colliding.count).must_equal entities.count - 1
       assert entities.select { |y| y != e }.all? { |y| e.collision.entities_colliding.any? { |x| x == y } }
     end
   end
 
   def assert_no_collision entities
     entities.each do |e|
-      e.collision.entities_colliding.count.must_equal 0
+      _(e.collision.entities_colliding.count).must_equal 0
     end
   end
 

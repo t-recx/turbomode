@@ -38,15 +38,15 @@ describe TextSystem do
     it "should ask for and store the correct entities" do
       subject.update entity_manager, []
 
-      subject.fixed_entities.must_equal [fixed_entity]
-      subject.scrollable_entities.must_equal [scrollable_entity]
+      _(subject.fixed_entities).must_equal [fixed_entity]
+      _(subject.scrollable_entities).must_equal [scrollable_entity]
     end
 
     it "should ask for and store camera's position" do
       subject.update entity_manager, []
 
-      subject.camera_x.must_equal camera_x
-      subject.camera_y.must_equal camera_y
+      _(subject.camera_x).must_equal camera_x
+      _(subject.camera_y).must_equal camera_y
     end
   end
 

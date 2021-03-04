@@ -31,7 +31,7 @@ describe InputLockedMovementSystem do
 
   describe :initialize do
     it "should set allow_pause to true" do
-      subject.allow_pause.must_equal true
+      _(subject.allow_pause).must_equal true
     end
   end
 
@@ -51,7 +51,7 @@ describe InputLockedMovementSystem do
 
       subject.update entity_manager, []
 
-      entity.input_locked_movement.movement_range.must_equal 1
+      _(entity.input_locked_movement.movement_range).must_equal 1
     end
 
     it "should set movement_range to size.width if entity has size" do
@@ -62,7 +62,7 @@ describe InputLockedMovementSystem do
 
       subject.update entity_manager, []
 
-      entity.input_locked_movement.movement_range.must_equal entity.size.width
+      _(entity.input_locked_movement.movement_range).must_equal entity.size.width
     end
 
     it 'should set state to idle if movement_left == 0' do
@@ -80,7 +80,7 @@ describe InputLockedMovementSystem do
 
       subject.update entity_manager, []
 
-      entity.state.state.must_equal :idle
+      _(entity.state.state).must_equal :idle
     end
 
     describe "when multiple keys pressed" do
@@ -91,7 +91,7 @@ describe InputLockedMovementSystem do
       it "should only take into account first key pressed" do
         subject.update entity_manager, []
 
-        entity.direction.direction.must_equal :up
+        _(entity.direction.direction).must_equal :up
       end
     end
 
@@ -108,7 +108,7 @@ describe InputLockedMovementSystem do
         it "should set state to moving" do
           subject.update entity_manager, []
 
-          entity.state.state.must_equal :moving
+          _(entity.state.state).must_equal :moving
         end
 
         it 'should set direction' do
@@ -116,7 +116,7 @@ describe InputLockedMovementSystem do
 
           subject.update entity_manager, []
 
-          entity.direction.direction.must_equal :up
+          _(entity.direction.direction).must_equal :up
         end
 
         it 'should set movement_left' do
@@ -124,13 +124,13 @@ describe InputLockedMovementSystem do
 
           subject.update entity_manager, []
 
-          entity.input_locked_movement.movement_left.must_equal entity.input_locked_movement.movement_range - entity.input_locked_movement.movement_unit
+          _(entity.input_locked_movement.movement_left).must_equal entity.input_locked_movement.movement_range - entity.input_locked_movement.movement_unit
         end
 
         it 'should record time when key was pressed' do
           subject.update entity_manager, []
 
-          entity.input_locked_movement.keys_time_pressed[:kbup].must_equal milliseconds
+          _(entity.input_locked_movement.keys_time_pressed[:kbup]).must_equal milliseconds
         end
 
         it 'should do nothing if not enough time passed' do
@@ -138,7 +138,7 @@ describe InputLockedMovementSystem do
 
           subject.update entity_manager, []
 
-          entity.state.state.must_equal :idle
+          _(entity.state.state).must_equal :idle
         end
       end
     end
@@ -154,7 +154,7 @@ describe InputLockedMovementSystem do
       it 'should decrease movement left' do
         subject.update entity_manager, []  
 
-        entity.input_locked_movement.movement_left.must_equal original_movement_left - entity.input_locked_movement.movement_unit
+        _(entity.input_locked_movement.movement_left).must_equal original_movement_left - entity.input_locked_movement.movement_unit
       end  
 
       it 'should change coordinates accordingly when up' do
@@ -178,13 +178,13 @@ describe InputLockedMovementSystem do
 
         subject.update entity_manager, []
 
-        entity.position.x.must_equal original_x + movement_unit
+        _(entity.position.x).must_equal original_x + movement_unit
       end
 
       it 'should set movement_last_time' do
         subject.update entity_manager, []
 
-        entity.input_locked_movement.movement_last_time.must_equal milliseconds
+        _(entity.input_locked_movement.movement_last_time).must_equal milliseconds
         
       end
     end
@@ -195,8 +195,8 @@ describe InputLockedMovementSystem do
 
     subject.update entity_manager, []
 
-    entity.position.x.must_equal ex if ex
-    entity.position.y.must_equal ey if ey
+    _(entity.position.x).must_equal ex if ex
+    _(entity.position.y).must_equal ey if ey
   end
 
   def set_button_down_expect w, im, button_down_symbol = nil
