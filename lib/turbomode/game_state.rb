@@ -1,6 +1,6 @@
 module Turbomode
   class GameState
-    def initialize wrapper, systems, messages, entity_manager, camera_helper
+    def initialize wrapper, systems, messages, entity_manager, camera_helper = nil
       @wrapper = wrapper
       @systems = systems
       @messages = messages
@@ -9,20 +9,24 @@ module Turbomode
     end
 
     def update
-      @systems.each do |system|
-        next unless system.on
-        next if system.paused
+      @systems.each do |s|
+        next unless s.on
+        next if s.paused
 
-        next unless system.time_to_next_update == 0 or @wrapper.milliseconds > system.last_time_updated + system.time_to_next_update
+        next unless s.time_to_next_update == 0 or @wrapper.milliseconds > s.last_time_updated + s.time_to_next_update
 
-        system.update @entity_manager, @messages if system.respond_to? :update
+        s.update @entity_manager, @messages if s.respond_to? :update
 
-        system.last_time_updated = @wrapper.milliseconds
+        s.last_time_updated = @wrapper.milliseconds
       end
     end
     
     def draw
-      scroll_x, scroll_y = @camera_helper.position
+      if @camera_helper
+        scroll_x, scroll_y = @camera_helper.position
+      else
+        scroll_x, scroll_y = 0, 0
+      end
 
       @systems.each do |s|
         next unless s.on
