@@ -33,6 +33,7 @@ module Turbomode
       selections.each do |key, value|
         value[:selection].delete entity
         value[:to_evaluate].delete entity
+        value[:cached].delete entity
       end
     end
 

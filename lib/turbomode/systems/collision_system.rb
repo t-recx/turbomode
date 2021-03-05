@@ -14,32 +14,9 @@ module Turbomode
       def check_collision entity, entities
         entity.collision.entities_colliding.clear
 
-        set_bounding_defaults_when_empty entity
-
-        entities.each do |another_entity|
-          next if entity == another_entity
-
-          if another_entity.collision.entities_colliding.include? entity
-            entity.collision.entities_colliding.add another_entity
-            next
-          end
-
-          entity.collision.entities_colliding.add(another_entity) if colliding entity, another_entity
-        end
-      end
-
-      def set_bounding_defaults_when_empty entity
-        collision = entity.collision
-
-        collision.br_x = 0 unless collision.br_x
-        collision.br_y = 0 unless collision.br_y
-
-        return unless entity.has? :size
-
-        size = entity.size
-
-        collision.br_width = size.width unless collision.br_width
-        collision.br_height = size.height unless collision.br_height
+        entity.collision.entities_colliding = entities
+          .reject { |x| x == entity }
+          .select { |e| colliding(entity, e)}
       end
 
       def colliding first, second
@@ -48,25 +25,42 @@ module Turbomode
         oe_pc = second.position
         oe_cc = second.collision
 
-        return true if not (left(oe_pc, oe_cc) > right(pc, cc) || right(oe_pc, oe_cc) < left(pc, cc) || top(oe_pc, oe_cc) > bottom(pc, cc) || bottom(oe_pc, oe_cc) < top(pc, cc))
+        pc_x = pc.x
+        pc_y = pc.y
+        cc_br_x = cc.br_x || 0
+        cc_br_width = cc.br_width || first.size.width
+        cc_br_y = cc.br_y || 0
+        cc_br_height = cc.br_height || first.size.height
+        oe_pc_x = oe_pc.x
+        oe_pc_y = oe_pc.y
+        oe_cc_br_x = cc.br_x || 0
+        oe_cc_br_width = oe_cc.br_width || second.size.width
+        oe_cc_br_y = oe_cc.br_y || 0
+        oe_cc_br_height = oe_cc.br_height || second.size.height
+
+        return true if not (
+          left(oe_pc_x, oe_cc_br_x) > right(pc_x, cc_br_x, cc_br_width) || 
+          right(oe_pc_x, oe_cc_br_x, oe_cc_br_width) < left(pc_x, cc_br_x) || 
+          top(oe_pc_y, oe_cc_br_y) > bottom(pc_y, cc_br_y, cc_br_height) || 
+          bottom(oe_pc_y, oe_cc_br_y, oe_cc_br_height) < top(pc_y, cc_br_y))
 
         return false
       end
 
-      def left(pc, cc)
-        pc.x + cc.br_x 
+      def left(x, br_x)
+        x + br_x 
       end
 
-      def right(pc, cc)
-        pc.x + cc.br_x + cc.br_width - 1
+      def right(x, br_x, br_width)
+        x + br_x + br_width - 1
       end
 
-      def top(pc, cc)
-        pc.y + cc.br_y 
+      def top(y, br_y)
+        y + br_y 
       end
 
-      def bottom(pc, cc)
-        pc.y + cc.br_y + cc.br_height - 1
+      def bottom(y, br_y, br_height)
+        y + br_y + br_height - 1
       end
     end
   end

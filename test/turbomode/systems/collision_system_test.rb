@@ -37,29 +37,6 @@ describe CollisionSystem do
       no_collision_testcase 100, 200, 300, 400, 1000, 300, 100, 100
     end
 
-    it "should set bounding x, y defaults on nil" do
-      entity = get_entity br_x: nil, br_y: nil 
-      @entity_manager.add entity
-
-      @collision_system.update @entity_manager, @messages
-
-      _(entity.collision.br_x).must_equal 0
-      _(entity.collision.br_y).must_equal 0
-    end
-
-    it "should set bounding width, height using size on nil" do
-      entity = get_entity br_width: nil, br_height: nil 
-      entity.add SizeComponent.new
-      entity.size.width = 10
-      entity.size.height = 20
-      @entity_manager.add entity
-
-      @collision_system.update @entity_manager, @messages
-
-      _(entity.collision.br_width).must_equal entity.size.width
-      _(entity.collision.br_height).must_equal entity.size.height
-    end
-
     def collision_testcase(x1, y1, w1, h1, x2, y2, w2, h2)
       assert_collision setup_collision_testcase(x1, y1, w1, h1, x2, y2, w2, h2)
     end

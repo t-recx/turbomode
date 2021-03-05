@@ -4,7 +4,6 @@ module Turbomode
       attr_accessor :keys_time_pressed
       attr_accessor :milliseconds_to_next
       attr_accessor :keys_action
-      attr_accessor :sample_movement
 
       UP = { x: 0, y: -1, direction: :up }
       DOWN = { x: 0, y: 1, direction: :down }
@@ -28,8 +27,6 @@ module Turbomode
         @keys_action[:gpdown] = DOWN
         @keys_action[:gpleft] = LEFT
         @keys_action[:gpright] = RIGHT
-
-        @sample_movement = nil
       end 
 
       def clone
@@ -39,7 +36,6 @@ module Turbomode
         component.milliseconds_to_next = @milliseconds_to_next
 
         component.keys_action = @keys_action.clone
-        component.sample_movement = @sample_movement
 
         component
       end

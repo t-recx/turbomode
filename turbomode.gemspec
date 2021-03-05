@@ -30,12 +30,12 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "gosu"
+  spec.add_dependency "gosu", "~> 1.1"
 
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "minitest"
-  spec.add_development_dependency "minitest-reporters"
-  spec.add_development_dependency "guard"
-  spec.add_development_dependency "guard-minitest"
+  spec.add_development_dependency "bundler", "~> 2.1"
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "minitest", "~> 5"
+  spec.add_development_dependency "minitest-reporters", "~> 1.4"
+  spec.add_development_dependency "guard", "~> 2"
+  spec.add_development_dependency "guard-minitest", "~> 2"
 end

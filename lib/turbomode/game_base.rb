@@ -20,8 +20,6 @@ module Turbomode
       read_messages
 
       @current_state.update if @current_state
-
-      @messages.clear
     end
 
     def draw
@@ -42,10 +40,19 @@ module Turbomode
     end
 
     def read_messages
+      processed = []
+
       @messages.each do |message|
-        @current_state = @messages_states[message[:message]].call if @messages_states[message[:message]]
-        @messages_actions[message[:message]].call if @messages_actions[message[:message]]
+        if @messages_states[message[:message]]
+          @current_state = @messages_states[message[:message]].call 
+          processed.push message
+        elsif @messages_actions[message[:message]]
+          @messages_actions[message[:message]].call
+          processed.push message
+        end
       end
+
+      processed.each { |p| @messages.delete p }
     end
   end
 end

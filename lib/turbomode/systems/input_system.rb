@@ -24,7 +24,7 @@ module Turbomode
             entity.state.state = :moving if entity.has? :state
             entity.direction.direction = value[:direction] if value[:direction] and entity.has? :direction
 
-            next if entity.input.keys_time_pressed[key] && (@wrapper.milliseconds - entity.input.keys_time_pressed[key]).abs < entity.input.milliseconds_to_next
+            next if entity.input.keys_time_pressed[key] && (@wrapper.milliseconds - entity.input.keys_time_pressed[key]).abs < (value[:milliseconds_to_next] || entity.input.milliseconds_to_next)
 
             entity.position.x += value[:x] if value[:x]
             entity.position.y += value[:y] if value[:y]
