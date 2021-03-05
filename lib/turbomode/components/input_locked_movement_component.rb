@@ -3,7 +3,7 @@ module Turbomode
     class InputLockedMovementComponent < Component
       attr_accessor :keys_time_pressed
       attr_accessor :milliseconds_to_next
-      attr_accessor :keys_movement
+      attr_accessor :keys_action
       attr_accessor :sample_movement
       attr_accessor :movement_range
       attr_accessor :movement_left
@@ -23,17 +23,17 @@ module Turbomode
         @movement_last_time = 0
         @movement_milliseconds_to_next = 20
 
-        @keys_movement = Hash.new
+        @keys_action = Hash.new
 
-        @keys_movement[:kbup] = :up
-        @keys_movement[:kbdown] = :down
-        @keys_movement[:kbleft] = :left
-        @keys_movement[:kbright] = :right
+        @keys_action[:kbup] = :up
+        @keys_action[:kbdown] = :down
+        @keys_action[:kbleft] = :left
+        @keys_action[:kbright] = :right
 
-        @keys_movement[:gpup] = :up
-        @keys_movement[:gpdown] = :down
-        @keys_movement[:gpleft] = :left
-        @keys_movement[:gpright] = :right
+        @keys_action[:gpup] = :up
+        @keys_action[:gpdown] = :down
+        @keys_action[:gpleft] = :left
+        @keys_action[:gpright] = :right
 
         @sample_movement = nil
       end
@@ -49,7 +49,7 @@ module Turbomode
         component.movement_unit = @movement_unit
         component.movement_last_time = @movement_last_time
         component.movement_milliseconds_to_next = @movement_milliseconds_to_next
-        component.keys_movement = @keys_movement.clone
+        component.keys_action = @keys_action.clone
         component.sample_movement = @sample_movement
 
         component

@@ -30,6 +30,7 @@ module Turbomode
 
       @systems.each do |s|
         next unless s.on
+        next unless s.respond_to? :draw
 
         @wrapper.translate(-scroll_x, -scroll_y) { s.draw(@entity_manager, true) }
 

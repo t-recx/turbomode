@@ -25,7 +25,7 @@ module Turbomode
           if ilm.movement_left <= 0 
             entity.state.state = :idle if entity.has? :state
 
-            ilm.keys_movement.each do |key, direction|
+            ilm.keys_action.each do |key, direction|
               next unless @wrapper.button_down? key
               next if (@wrapper.milliseconds - ilm.keys_time_pressed[key]).abs < ilm.milliseconds_to_next
 

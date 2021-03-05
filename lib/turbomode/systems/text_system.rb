@@ -8,7 +8,7 @@ module Turbomode
       attr_accessor :camera_x
       attr_accessor :camera_y
 
-      def initialize wrapper, camera_helper
+      def initialize wrapper, camera_helper = nil
         @wrapper = wrapper
         @camera_helper = camera_helper
 
@@ -17,7 +17,11 @@ module Turbomode
       end
 
       def update entity_manager, messages
-        @camera_x, @camera_y = @camera_helper.position
+        if @camera_helper
+          @camera_x, @camera_y = @camera_helper.position
+        else
+          @camera_x, @camera_y = 0, 0
+        end
 
         @fixed_entities = entity_manager.select with: [:text], without: [:scrollable]
         @scrollable_entities = entity_manager.select_with :text, :scrollable

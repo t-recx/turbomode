@@ -15,7 +15,7 @@ module Turbomode
     end
 
     def draw_rot(sprite, x, y, z, angle, center_x, center_y, scale_x, scale_y, color)
-      sprite.draw_rot(sprite, x, y, z, angle, center_x, center_y, scale_x, scale_y, color)
+      sprite.draw_rot(x, y, z, angle, center_x, center_y, scale_x, scale_y, color)
     end
 
     def draw_text(text, x, y, z, rel_x, rel_y, scale_x, scale_y, color, font: nil, font_size: nil)
@@ -34,9 +34,8 @@ module Turbomode
     end
 
     def get_key symbol
-      gosu_name = symbol.to_s.capitalize
-      gosu_name[2] = gosu_name[2].upcase if gosu_name.length > 2
-      constant = "Gosu::#{gosu_name}"
+      gosu_name = symbol.to_s.upcase
+      constant = "Gosu::#{gosu_name[0..1]}_#{gosu_name[2..-1]}"
 
       return Object.const_get constant
     end
@@ -59,6 +58,10 @@ module Turbomode
 
     def screen_height
       @window.height
+    end
+
+    def get_image filename
+      Gosu::Image.new filename
     end
   end
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 require 'turbomode'
 include Turbomode
-include Turbomode::Constants
 
 describe "Game Base" do
   before do
@@ -25,7 +24,7 @@ describe "Game Base" do
       @another_state = Minitest::Mock.new
       @another_state.expect :update, nil
       @messages_states["A"] = lambda { @another_state }
-      @messages.push "A"
+      @messages.push({ message: "A" })
 
       @game_base.update
 
@@ -33,7 +32,7 @@ describe "Game Base" do
     end
 
     it "should pause state if appropriate message sent" do
-      @messages.push Messages::PAUSE_GAME
+      @messages.push({ message: :pause_game })
       @current_state.expect :pause, nil
       @current_state.expect :update, nil
 
@@ -43,7 +42,7 @@ describe "Game Base" do
     end
 
     it "should resume if appropriate message sent" do
-      @messages.push Messages::RESUME_GAME
+      @messages.push({ message: :resume_game })
       @current_state.expect :resume, nil
       @current_state.expect :update, nil
 

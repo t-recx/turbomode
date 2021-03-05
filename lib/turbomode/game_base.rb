@@ -11,27 +11,29 @@ module Turbomode
       @messages_states = messages_states
 
       @messages_actions = {}
-      @messages_actions[Messages::LEAVE_GAME] = lambda { end_game }
-      @messages_actions[Messages::PAUSE_GAME] = lambda { pause_game }
-      @messages_actions[Messages::RESUME_GAME] = lambda { resume_game }
+      @messages_actions[:leave_game] = lambda { end_game }
+      @messages_actions[:pause_game] = lambda { pause_game }
+      @messages_actions[:resume_game] = lambda { resume_game }
     end
 
     def update
       read_messages
 
-      @current_state.update
+      @current_state.update if @current_state
+
+      @messages.clear
     end
 
     def draw
-      @current_state.draw
+      @current_state.draw if @current_state
     end
 
     def pause_game
-      @current_state.pause
+      @current_state.pause if @current_state
     end
 
     def resume_game
-      @current_state.resume
+      @current_state.resume if @current_state
     end
 
     def end_game
@@ -41,8 +43,8 @@ module Turbomode
 
     def read_messages
       @messages.each do |message|
-        @current_state = @messages_states[message].call if @messages_states[message]
-        @messages_actions[message].call if @messages_actions[message]
+        @current_state = @messages_states[message[:message]].call if @messages_states[message[:message]]
+        @messages_actions[message[:message]].call if @messages_actions[message[:message]]
       end
     end
   end

@@ -5,7 +5,7 @@ include Turbomode::Systems
 include Turbomode::Components
 include Turbomode::Helpers
 
-describe InputMovementSystem do
+describe InputSystem do
   before do
     @milliseconds = 3
   end
@@ -15,31 +15,31 @@ describe InputMovementSystem do
   let(:entity_manager_mock) { Minitest::Mock.new }
   let(:messages) { [] }
   let(:position) { PositionComponent.new }
-  let(:input_movement) { InputMovementComponent.new }
-  let(:entity) { e = Entity.new; e.add position; e.add input_movement; e }
+  let(:input) { InputComponent.new }
+  let(:entity) { e = Entity.new; e.add position; e.add input; e }
   
-  let(:input_movement_system) { InputMovementSystem.new wrapper_mock }
+  let(:input_system) { InputSystem.new wrapper_mock }
 
   describe :initialize do
     it "should set allow_pause to true" do
-      _(input_movement_system.allow_pause).must_equal true
+      _(input_system.allow_pause).must_equal true
     end
   end
 
   describe :update do
     it "should call entity_manager with appropriate arguments" do
-      entity_manager_mock.expect :select_with, Set.new, [:input_movement, :position]
+      entity_manager_mock.expect :select_with, Set.new, [:input, :position]
 
-      input_movement_system.update entity_manager_mock, messages
+      input_system.update entity_manager_mock, messages
 
       entity_manager_mock.verify
     end
 
     it "should change position if key pressed" do 
       entity_manager.add entity
-      set_button_down_expect wrapper_mock, input_movement, :kbdown
+      set_button_down_expect wrapper_mock, input, :kbdown
 
-      input_movement_system.update entity_manager, messages
+      input_system.update entity_manager, messages
 
       _(entity.position.x).must_equal 0
       _(entity.position.y).must_equal 1
@@ -49,9 +49,9 @@ describe InputMovementSystem do
       entity.add StateComponent.new
       entity.state.state = :whatever
       entity_manager.add entity
-      set_button_down_expect wrapper_mock, input_movement
+      set_button_down_expect wrapper_mock, input
 
-      input_movement_system.update entity_manager, messages
+      input_system.update entity_manager, messages
 
       _(entity.state.state).must_equal :idle
     end
@@ -59,9 +59,9 @@ describe InputMovementSystem do
     it "should set state = moving on entity if key pressed" do
       entity.add StateComponent.new
       entity_manager.add entity
-      set_button_down_expect wrapper_mock, input_movement, :kbup
+      set_button_down_expect wrapper_mock, input, :kbup
 
-      input_movement_system.update entity_manager, messages
+      input_system.update entity_manager, messages
 
       _(entity.state.state).must_equal :moving
     end
@@ -70,29 +70,29 @@ describe InputMovementSystem do
       entity.add DirectionComponent.new
       entity.direction.direction = :left
       entity_manager.add entity
-      set_button_down_expect wrapper_mock, input_movement, :kbright
+      set_button_down_expect wrapper_mock, input, :kbright
 
-      input_movement_system.update entity_manager, messages
+      input_system.update entity_manager, messages
 
       _(entity.direction.direction).must_equal :right
     end
 
     it "should set key press milliseconds" do
       entity_manager.add entity
-      set_button_down_expect wrapper_mock, input_movement, :kbdown
+      set_button_down_expect wrapper_mock, input, :kbdown
 
-      input_movement_system.update entity_manager, messages
+      input_system.update entity_manager, messages
 
-      _(input_movement.keys_time_pressed[:kbdown]).must_equal 3
+      _(input.keys_time_pressed[:kbdown]).must_equal 3
     end
 
     it "should only acknowledge key press if sufficient time passed" do
       wrapper_mock.expect :milliseconds, 3
       entity_manager.add entity
       2.times do
-        set_button_down_expect wrapper_mock, input_movement, :kbdown
+        set_button_down_expect wrapper_mock, input, :kbdown
 
-        input_movement_system.update entity_manager, messages
+        input_system.update entity_manager, messages
       end 
 
       _(entity.position.y).must_equal 1
@@ -100,17 +100,17 @@ describe InputMovementSystem do
 
     it "should allow another key press to change position when sufficient time passed" do
       entity_manager.add entity
-      set_button_down_expect wrapper_mock, input_movement, :kbdown
-      input_movement_system.update entity_manager, messages
-      2.times { wrapper_mock.expect :milliseconds, 3 + input_movement.milliseconds_to_next + 1 }
-      set_button_down_expect wrapper_mock, input_movement, :kbdown
-      input_movement_system.update entity_manager, messages
+      set_button_down_expect wrapper_mock, input, :kbdown
+      input_system.update entity_manager, messages
+      2.times { wrapper_mock.expect :milliseconds, 3 + input.milliseconds_to_next + 1 }
+      set_button_down_expect wrapper_mock, input, :kbdown
+      input_system.update entity_manager, messages
 
       _(entity.position.y).must_equal 2
     end
 
     def set_button_down_expect w, im, button_down_symbol = nil
-      im.keys_movement.each do |key, value|
+      im.keys_action.each do |key, value|
         return_value = (key == button_down_symbol ? true : false)
         w.expect :button_down?, return_value, [key] 
       end

@@ -200,7 +200,7 @@ describe InputLockedMovementSystem do
   end
 
   def set_button_down_expect w, im, button_down_symbol = nil
-    im.keys_movement.each do |key, value|
+    im.keys_action.each do |key, value|
       bds = nil
 
       if button_down_symbol != nil then
