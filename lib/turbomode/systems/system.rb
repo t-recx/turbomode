@@ -24,6 +24,15 @@ module Turbomode
       def resume
         @paused = false
       end
+
+      def process messages, filter, &block
+        messages
+        .select { |m| m[:message] == filter}
+        .each do |m| 
+          yield(m) 
+          messages.delete m
+        end
+      end
     end
   end
 end
