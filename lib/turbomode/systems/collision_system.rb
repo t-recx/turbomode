@@ -28,15 +28,15 @@ module Turbomode
         pc_x = pc.x
         pc_y = pc.y
         cc_br_x = cc.br_x || 0
-        cc_br_width = cc.br_width || first.size.width
+        cc_br_width = cc.br_width || (first.has?(:size) ? first.size.width : first.sprite.sprite.width)
         cc_br_y = cc.br_y || 0
-        cc_br_height = cc.br_height || first.size.height
+        cc_br_height = cc.br_height || (first.has?(:size) ? first.size.height : first.sprite.sprite.height)
         oe_pc_x = oe_pc.x
         oe_pc_y = oe_pc.y
         oe_cc_br_x = cc.br_x || 0
-        oe_cc_br_width = oe_cc.br_width || second.size.width
+        oe_cc_br_width = oe_cc.br_width || (second.has?(:size) ? second.size.width : second.sprite.sprite.width)
         oe_cc_br_y = oe_cc.br_y || 0
-        oe_cc_br_height = oe_cc.br_height || second.size.height
+        oe_cc_br_height = oe_cc.br_height || (second.has?(:size) ? second.size.height : second.sprite.sprite.height)
 
         return true if not (
           left(oe_pc_x, oe_cc_br_x) > right(pc_x, cc_br_x, cc_br_width) || 

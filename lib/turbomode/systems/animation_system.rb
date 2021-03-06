@@ -10,8 +10,8 @@ module Turbomode
 
       def update entity_manager, messages
         entity_manager.select_with(:animation, :sprite).each do |e|
-          state = e.state ? e.state.state : :other
-          direction = e.direction ? e.direction.direction : :other
+          state = e.state ? e.state.state : nil
+          direction = e.direction ? e.direction.direction : nil
 
           e.animation.current_frame_position = 0 unless e.animation.current_frame(state, direction)
 

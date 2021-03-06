@@ -6,7 +6,17 @@ module Turbomode
       attr_accessor :last_time_frame_update
 
       def current_animation(state, direction)
-        @frames[state][direction]
+        f = @frames
+
+        if state
+          f = f[state]
+        end
+
+        if direction
+          f = f[direction]
+        end
+
+        return f
       end
 
       def current_frame(state, direction)

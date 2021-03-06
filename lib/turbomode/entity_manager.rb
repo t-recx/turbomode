@@ -22,8 +22,12 @@ module Turbomode
     end
 
     def merge *entities
-      entities.each do |entity|
-        add entity
+      entities.each do |e|
+        if e.respond_to?(:each)
+          e.each { |ee| add ee }
+        else
+          add e
+        end
       end
     end
 
@@ -38,8 +42,12 @@ module Turbomode
     end
 
     def subtract *list
-      list.each do |entity|
-        delete entity
+      list.each do |e|
+        if e.respond_to?(:each)
+          e.each { |ee| delete ee }
+        else
+          delete e
+        end
       end
     end
 
