@@ -27,6 +27,8 @@ describe "Game State" do
       setup_last_time_updated @systems
       setup_time_to_next_update @systems
 
+      @wrapper.expect :button_down?, false, [:kbescape]
+
       @systems.each { |s| s.last_time_updated = 0; s.time_to_next_update = 0 }
     end
 

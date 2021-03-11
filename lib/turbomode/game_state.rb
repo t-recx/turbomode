@@ -9,6 +9,10 @@ module Turbomode
     end
 
     def update
+      if @wrapper.button_down? :kbescape
+        @messages.push({ message: :leave_game})
+      end
+
       @systems.each do |s|
         next unless s.on
         next if s.paused

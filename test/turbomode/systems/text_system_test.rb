@@ -93,7 +93,7 @@ describe TextSystem do
     end
 
     it "should evaluate expression when present and put it on text" do
-      fixed_entity.text.text_eval = '"#{2+2}"'
+      fixed_entity.text.text_lambda = -> { (2+2).to_s }
 
       setup_expectation "4"
       subject.draw entity_manager, false

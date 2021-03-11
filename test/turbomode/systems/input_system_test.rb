@@ -48,6 +48,7 @@ describe InputSystem do
     it "should set state = idle on entity if has state" do
       entity.add StateComponent.new
       entity.state.state = :whatever
+      entity.input.default_state = :idle
       entity_manager.add entity
       set_button_down_expect wrapper_mock, input
 
@@ -59,6 +60,7 @@ describe InputSystem do
     it "should set state = moving on entity if key pressed" do
       entity.add StateComponent.new
       entity_manager.add entity
+      entity.input.keys_action = { kbup: {state: :moving} }
       set_button_down_expect wrapper_mock, input, :kbup
 
       input_system.update entity_manager, messages

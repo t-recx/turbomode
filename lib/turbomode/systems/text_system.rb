@@ -14,6 +14,8 @@ module Turbomode
 
         @fixed_entities = Set.new
         @scrollable_entities = Set.new
+
+        super()
       end
 
       def update entity_manager, messages
@@ -59,7 +61,7 @@ module Turbomode
 
           color = e.color.color if e.has? :color
 
-          e.text.text = eval(e.text.text_eval) if e.text.text_eval
+          e.text.text = e.text.text_lambda.call if e.text.text_lambda
 
           @wrapper.draw_text e.text.text, x, y, z, rel_x, rel_y, scale_x, scale_y, color, font_size: font_size
         end

@@ -4,6 +4,7 @@ module Turbomode
       attr_accessor :keys_time_pressed
       attr_accessor :milliseconds_to_next
       attr_accessor :keys_action
+      attr_accessor :default_state
 
       UP = { x: 0, y: -1, direction: :up }
       DOWN = { x: 0, y: 1, direction: :down }

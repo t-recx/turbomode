@@ -4,6 +4,7 @@ module Turbomode
   class Wrapper
     def initialize window
       @window = window
+      @fonts = {}
     end
 
     def milliseconds
@@ -19,13 +20,20 @@ module Turbomode
     end
 
     def draw_text(text, x, y, z, rel_x, rel_y, scale_x, scale_y, color, font: nil, font_size: nil)
-      raise "TODO: code this method"
-      
-      #dont forget to call get_color on color before draw
-      #@font_factory.get_font(tc.font_size).draw_rel(tc.text, x + tc.offset_x, y + tc.offset_y, z, tc.rel_x, tc.rel_y, tc.scale_x, tc.scale_y, color) 
+      if font.nil?
+        unless @fonts[font_size]
+          @fonts[font_size] = Gosu::Font.new(font_size || 12)
+        end
+
+        font = @fonts[font_size]
+      end
+
+      font.draw_text_rel(text, x, y, z, rel_x, rel_y, scale_x, scale_y, get_color(color)) 
     end
 
     def get_color symbol
+      return symbol unless symbol.is_a? Symbol
+
       constant = "Gosu::Color::#{symbol.to_s.upcase}"
 
       return Object.const_get constant if Object.const_defined? constant
