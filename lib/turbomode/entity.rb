@@ -15,13 +15,17 @@ module Turbomode
       @on_add_component = nil
       @on_delete_component = nil
 
-      merge *component_list
+      merge(*component_list)
     end
 
     def add component
       components.add component 
 
       (class << self; self; end).class_eval do
+        if method_defined? component.method_name
+          remove_method component.method_name 
+        end
+
         define_method(component.method_name) { component }
       end
 

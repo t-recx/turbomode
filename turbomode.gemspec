@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 2.1"
   spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "minitest", "~> 5"
+  spec.add_development_dependency "minitest", "~> 5", "< 5.16"
   spec.add_development_dependency "minitest-reporters", "~> 1.4"
   spec.add_development_dependency "guard", "~> 2"
   spec.add_development_dependency "guard-minitest", "~> 2"

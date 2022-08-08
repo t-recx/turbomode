@@ -36,8 +36,8 @@ describe Wrapper do
 
   describe :get_key do
     it "should return gosu value when available" do
-      _(wrapper.get_key(:kba)).must_equal Gosu::KbA
-      _(wrapper.get_key(:gpdown)).must_equal Gosu::GpDown
+      _(wrapper.get_key(:kba)).must_equal Gosu::KB_A
+      _(wrapper.get_key(:gpdown)).must_equal Gosu::GP_DOWN
     end
 
     it "should raise exception if value not available" do
