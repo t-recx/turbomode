@@ -4,8 +4,10 @@ module Turbomode
   class GameBase < Gosu::Window
     attr_accessor :current_state
 
-    def initialize messages, messages_states, width = 640, height = 480, fullscreen = false
-      super width, height, fullscreen
+    def initialize messages, messages_states, width = 640, height = 480, fullscreen = false, initialize_window = true
+      if initialize_window
+        super width, height, fullscreen
+      end
 
       @messages = messages
       @messages_states = messages_states

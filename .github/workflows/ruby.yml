@@ -26,7 +26,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get install build-essential libsdl2-dev libgl1-mesa-dev libopenal-dev \
-                     libgmp-dev libfontconfig1-dev xorg-dev
+                     libgmp-dev libfontconfig1-dev
         bundle install
     - name: Run tests
       run: |

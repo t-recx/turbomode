@@ -7,7 +7,7 @@ describe "Game Base" do
     @messages = []
     @messages_states = {}
     @current_state = Minitest::Mock.new
-    @game_base = GameBase.new @messages, @messages_states
+    @game_base = GameBase.new @messages, @messages_states, 640, 480, false, false
     @game_base.current_state = @current_state
   end
 
