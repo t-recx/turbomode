@@ -1,0 +1,33 @@
+name: Ruby
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['3.0']
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+    - name: Install dependencies
+      run: |
+        sudo apt-get install build-essential libsdl2-dev libgl1-mesa-dev libopenal-dev \
+                     libgmp-dev libfontconfig1-dev
+        bundle install
+    - name: Run tests
+      run: |
+        bundle exec rake test
