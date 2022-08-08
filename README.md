@@ -75,7 +75,7 @@ Example animation system that handles entities with the Animation component and 
 
 ### Install dependencies
 
-Follow the (install instructions for gosu)[https://github.com/gosu/gosu/wiki/Getting-Started-on-Linux]
+Follow the [install instructions for gosu](https://github.com/gosu/gosu/wiki/Getting-Started-on-Linux) and then:
 
     $ bundle install
 
